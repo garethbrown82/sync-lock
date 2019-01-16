@@ -18,11 +18,11 @@ const Number = styled.p`
 `
 
 export const SquareButton = (props) => {
-  const { number } = props
+  const { value } = props
   return (
     <StyledSquare {...props}>
       <Number>
-        {number}
+        {value}
       </Number>
     </StyledSquare>
   )
