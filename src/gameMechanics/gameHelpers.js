@@ -1,17 +1,17 @@
-import { Button, Operation } from './levels'
+import { Operation } from './levels'
 
 export const triggerActions = (clickedButton, buttonActions, values) => {
-  const updatedValues = values
+  let updatedValues = cloneArray(values)
   const actionsForButton = buttonActions.filter((action) => action.triggerButton === clickedButton)
   actionsForButton.forEach((action) => {
-
+    updatedValues = processAction(action, cloneArray(updatedValues))
   })
 
-  return [0, 0, 0, 0]
+  return updatedValues
 }
 
 export const processAction = (action, values) => {
-  const updateValues = values
+  const updateValues = cloneArray(values)
   const initialValue = values[action.affectedButton]
   updateValues[action.affectedButton] = updateValue(initialValue, action.operation, action.value)
   return updateValues
@@ -32,3 +32,5 @@ export const createButtonAction = (triggerButton, affectedButton, operation, val
     value,
   }
 }
+
+const cloneArray = (array) => array.slice(0)

@@ -3,6 +3,7 @@ import { SquareButton } from './SquareButton'
 import { Header } from './Header'
 import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
+import { triggerActions } from '../gameMechanics/gameHelpers'
 
 const Grid = styled.div`
   height: 250px;
@@ -33,6 +34,7 @@ export class Game extends Component {
   triggerButton = (clickedButton) => {
     const { level, values } = this.state
     const updatedValues = triggerActions(clickedButton, level.buttonActions, values)
+    this.setState({ values: updatedValues })
   }
 
   render() {
@@ -43,10 +45,30 @@ export class Game extends Component {
           text={`Target Value: ${level && level.targetNumber}`}
         />
         <Grid>
-          <SquareButton column={1} row={1} value={values[0]} />
-          <SquareButton column={2} row={1} value={values[1]} />
-          <SquareButton column={1} row={2} value={values[2]} />
-          <SquareButton column={2} row={2} value={values[3]} />
+          <SquareButton
+            column={1}
+            row={1}
+            value={values[0]}
+            onClick={() => this.triggerButton(Button.TopLeft)}
+          />
+          <SquareButton
+            column={2}
+            row={1}
+            value={values[1]}
+            onClick={() => this.triggerButton(Button.TopRight)}
+            />
+          <SquareButton
+            column={1}
+            row={2}
+            value={values[2]}
+            onClick={() => this.triggerButton(Button.BottomLeft)}
+            />
+          <SquareButton
+            column={2}
+            row={2}
+            value={values[3]}
+            onClick={() => this.triggerButton(Button.BottomRight)}
+            />
         </Grid>
       </React.Fragment>
     )

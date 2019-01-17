@@ -1,17 +1,17 @@
 import { Operation, Button } from "./levels"
 import { processAction, createButtonAction, triggerActions, updateValue } from './gameHelpers'
 
-// describe('triggerActions', () => {
-//   it('returns the updated button values based on the actions it receives', () => {
-//     const values = [2, 2, 2, 2]
-//     const buttonActions = [
-//       createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
-//       createButtonAction(Button.TopRight, Button.TopRight, Operation.Multiply, 3),
-//     ]
-//     expect(triggerActions(Button.TopLeft, buttonActions, values)).toEqual([10, 2, 2, 2])
-//     expect(triggerActions(Button.TopRight, buttonActions, values)).toEqual([2, 6, 2, 2])
-//   })
-// })
+describe('triggerActions', () => {
+  it('returns the updated button values based on the actions it receives', () => {
+    const values = Object.freeze([2, 2, 2, 2])
+    const buttonActions = [
+      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 8),
+      createButtonAction(Button.TopRight, Button.TopRight, Operation.Multiply, 3),
+    ]
+    expect(triggerActions(Button.TopLeft, buttonActions, values)).toEqual([10, 2, 2, 2])
+    expect(triggerActions(Button.TopRight, buttonActions, values)).toEqual([2, 6, 2, 2])
+  })
+})
 
 describe('processAction', () => {
   it('correctly processes an action returning the correct values', () => {

@@ -1,3 +1,5 @@
+import { createButtonAction } from './gameHelpers'
+
 export const Button = Object.freeze({
   TopLeft: 0,
   TopRight: 1,
@@ -14,14 +16,12 @@ export const Operation = Object.freeze({
 
 const level1 = {
   targetNumber: 10,
-  startValues: [5, 6, 7, 4],
+  startValues: [5, 4, 5, 40],
   buttonActions: [
-    {
-      triggerButton: Button.TopLeft,
-      button: Button.TopLeft,
-      operation: Operation.Add,
-      value: 5
-    }
+    createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
+    createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
+    createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 2),
+    createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
   ]
 }
 
