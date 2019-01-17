@@ -25,10 +25,6 @@ const level1 = {
   ]
 }
 
-// const createLevel = (targetNumber, startValues, buttonActions) => {
-
-// }
-
 export const levels = [
   level1
 ]
