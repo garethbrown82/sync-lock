@@ -70,6 +70,7 @@ export class Game extends Component {
       <React.Fragment>
         <Header
           text={headerText}
+          levelNumber={3}
         />
         <Grid>
           <SquareButton

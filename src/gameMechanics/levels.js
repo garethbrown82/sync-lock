@@ -14,6 +14,14 @@ export const Operation = Object.freeze({
   Divide: 'divide'
 })
 
+export const createLevel = (targetNumber, initialValues, buttonActions) => {
+  return {
+    targetNumber,
+    initialValues: Object.freeze(initialValues),
+    buttonActions,
+  }
+}
+
 const level1 = {
   targetNumber: 10,
   initialValues: [5, 4, 5, 40],

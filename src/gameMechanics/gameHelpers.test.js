@@ -1,4 +1,4 @@
-import { Operation, Button } from "./levels"
+import { Operation, Button, createLevel } from "./levels"
 import { processAction, createButtonAction, triggerActions, updateValue, isLevelSolved } from './gameHelpers'
 
 describe('triggerActions', () => {
@@ -72,5 +72,43 @@ describe('isLevelSolved', () => {
 
   it('returns false if the array of values is empty', () => {
     expect(isLevelSolved([], 10)).toBe(false)
+  })
+})
+
+describe('createLevel', () => {
+  it('creates a game level', () => {
+    const targetNumber = 12
+    const initialValues = [1, 2, 3, 4]
+    const buttonActions = [
+      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
+      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
+      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 2),
+      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
+    ]
+
+    const expectedLevel = {
+      targetNumber,
+      initialValues,
+      buttonActions,
+    }
+
+    expect(createLevel(targetNumber, initialValues, buttonActions)).toEqual(expectedLevel)
+  })
+
+  it('returns initial values that cannot be mutated', () => {
+    const targetNumber = 12
+    const initialValues = [1, 2, 3, 4]
+    const buttonActions = [
+      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
+      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
+      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 2),
+      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
+    ]
+    const level = createLevel(targetNumber, initialValues, buttonActions)
+    const modifyLevel = (levelToModify) => {
+      levelToModify.initialValues[0] = 10
+    }
+
+    expect(() => modifyLevel(level)).toThrow('Cannot assign to read only property')
   })
 })
