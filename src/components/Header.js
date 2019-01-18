@@ -6,7 +6,6 @@ const StyledHeader = styled.div`
   color: white;
   border-radius: 10px;
   padding: 10px;
-  margin-bottom: 20px;
 `
 
 export const Header = (props) => {

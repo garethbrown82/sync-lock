@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { SquareButton } from './SquareButton'
 import { Header } from './Header'
+import { LevelButton } from './LevelButton'
 import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
@@ -11,6 +12,7 @@ const Grid = styled.div`
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
+  margin: 20px 0;
 `
 
 export class Game extends Component {
@@ -35,15 +37,27 @@ export class Game extends Component {
   setInitialLevel = (level) => {
     this.setState({ level }, () => {
       this.setState({
-        values: this.state.level.startValues,
+        values: this.state.level.initialValues,
       })
     })
   }
 
   triggerButton = (clickedButton) => {
-    const { level, values } = this.state
+    const { level, values, isLevelCompleted } = this.state
+    if (isLevelCompleted) return
     const updatedValues = triggerActions(clickedButton, level.buttonActions, values)
     this.setState({ values: updatedValues })
+  }
+
+  handleLevelButton = () => {
+    console.log('level button clicked')
+    if (this.state.isLevelCompleted) {
+      console.log('go to next level')
+    } else {
+      this.setState((preState) => ({
+        values: preState.level.initialValues
+      }))
+    }
   }
 
   render() {
@@ -51,6 +65,7 @@ export class Game extends Component {
     const headerText = isLevelCompleted ?
       'You\'ve completed the level!'
       : `Target Value: ${level && level.targetNumber}`
+
     return (
       <React.Fragment>
         <Header
@@ -86,6 +101,10 @@ export class Game extends Component {
             onClick={() => this.triggerButton(Button.BottomRight)}
             />
         </Grid>
+        <LevelButton
+          isLevelCompleted={isLevelCompleted}
+          onClick={this.handleLevelButton}
+        />
       </React.Fragment>
     )
   }

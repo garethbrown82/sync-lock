@@ -16,7 +16,7 @@ export const Operation = Object.freeze({
 
 const level1 = {
   targetNumber: 10,
-  startValues: [5, 4, 5, 40],
+  initialValues: [5, 4, 5, 40],
   buttonActions: [
     createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
     createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
