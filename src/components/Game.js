@@ -3,7 +3,7 @@ import { SquareButton } from './SquareButton'
 import { Header } from './Header'
 import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
-import { triggerActions } from '../gameMechanics/gameHelpers'
+import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
 
 const Grid = styled.div`
   height: 250px;
@@ -17,10 +17,19 @@ export class Game extends Component {
   state = {
     level: null,
     values: [],
+    isLevelCompleted: false,
   }
 
   componentDidMount = () => {
     this.setInitialLevel(levels[0])
+  }
+
+  componentDidUpdate = (prevProps, prevState) => {
+    const { values, level } = this.state
+    const isSolved = isLevelSolved(values, level.targetNumber)
+    if (!prevState.isLevelCompleted && isSolved) {
+      this.setState({ isLevelCompleted: isSolved })
+    }
   }
 
   setInitialLevel = (level) => {
@@ -38,35 +47,42 @@ export class Game extends Component {
   }
 
   render() {
-    const { values, level } = this.state
+    const { values, level, isLevelCompleted } = this.state
+    const headerText = isLevelCompleted ?
+      'You\'ve completed the level!'
+      : `Target Value: ${level && level.targetNumber}`
     return (
       <React.Fragment>
         <Header
-          text={`Target Value: ${level && level.targetNumber}`}
+          text={headerText}
         />
         <Grid>
           <SquareButton
             column={1}
             row={1}
             value={values[0]}
+            isLevelCompleted={isLevelCompleted}
             onClick={() => this.triggerButton(Button.TopLeft)}
           />
           <SquareButton
             column={2}
             row={1}
             value={values[1]}
+            isLevelCompleted={isLevelCompleted}
             onClick={() => this.triggerButton(Button.TopRight)}
             />
           <SquareButton
             column={1}
             row={2}
             value={values[2]}
+            isLevelCompleted={isLevelCompleted}
             onClick={() => this.triggerButton(Button.BottomLeft)}
             />
           <SquareButton
             column={2}
             row={2}
             value={values[3]}
+            isLevelCompleted={isLevelCompleted}
             onClick={() => this.triggerButton(Button.BottomRight)}
             />
         </Grid>

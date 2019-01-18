@@ -1,5 +1,5 @@
 import { Operation, Button } from "./levels"
-import { processAction, createButtonAction, triggerActions, updateValue } from './gameHelpers'
+import { processAction, createButtonAction, triggerActions, updateValue, isLevelSolved } from './gameHelpers'
 
 describe('triggerActions', () => {
   it('returns the updated button values based on the actions it receives', () => {
@@ -54,5 +54,23 @@ describe('createButtonAction', () => {
         operation: Operation.Add,
         value: 5,
       })
+  })
+})
+
+describe('isLevelSolved', () => {
+  it('returns true if the level is solved', () => {
+    const values = [5, 5, 5, 5]
+    const targetNumber = 5
+    expect(isLevelSolved(values, targetNumber)).toBe(true)
+  })
+
+  it('returns false if the level is not solved', () => {
+    const values = [5, 5, 5, 6]
+    const targetNumber = 5
+    expect(isLevelSolved(values, targetNumber)).toBe(false)
+  })
+
+  it('returns false if the array of values is empty', () => {
+    expect(isLevelSolved([], 10)).toBe(false)
   })
 })

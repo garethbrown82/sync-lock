@@ -33,4 +33,9 @@ export const createButtonAction = (triggerButton, affectedButton, operation, val
   }
 }
 
+export const isLevelSolved = (values, targetNumber) => {
+  if (values.length !== 4) return false
+  return values.every((value) => value === targetNumber)
+}
+
 const cloneArray = (array) => array.slice(0)
