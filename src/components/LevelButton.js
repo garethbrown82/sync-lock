@@ -1,12 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Colour } from './helpers'
 import { PropTypes } from 'prop-types'
 
 const StyledLevelButton = styled.div.attrs(props => ({
   onClick: props.onClick
 }))`
-  background-color: ${props => props.isLevelCompleted ? Colour.Blue : Colour.Red};
+  background-color: ${props => props.colour};
   border-radius: 10px;
   padding: 10px;
   justify-content: center;
@@ -17,15 +16,15 @@ const StyledLevelButton = styled.div.attrs(props => ({
 `
 
 export const LevelButton = (props) => {
-  const label = props.isLevelCompleted ? 'Next level' : 'Reset'
   return (
     <StyledLevelButton {...props}>
-      <p>{label}</p>
+      <p>{props.text}</p>
     </StyledLevelButton>
   )
 }
 
 LevelButton.propTypes = {
-  isLevelCompleted: PropTypes.bool.isRequired,
+  text: PropTypes.string,
+  colour: PropTypes.string,
   onClick: PropTypes.func.isRequired,
 }

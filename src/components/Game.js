@@ -6,6 +6,7 @@ import { EndGameScreen } from './EndGameScreen'
 import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
+import { Colour } from './helpers';
 
 const Grid = styled.div`
   height: 250px;
@@ -27,7 +28,7 @@ export class Game extends Component {
 
   componentDidMount = () => {
     const { levelIndex } = this.state
-    this.resetLevel(levels[levelIndex])
+    this.resetLevel(levelIndex)
   }
 
   componentDidUpdate = (prevProps, prevState) => {
@@ -38,11 +39,14 @@ export class Game extends Component {
     }
   }
 
-  resetLevel = (level) => {
+  resetLevel = (index) => {
+    const level = levels[index]
     this.setState({ level }, () => {
       this.setState({
         values: this.state.level.initialValues,
         isLevelCompleted: false,
+        isAllLevelsCompleted: false,
+        levelIndex: index,
       })
     })
   }
@@ -61,7 +65,7 @@ export class Game extends Component {
       } else {
         this.setState((prevState) => ({
           levelIndex: prevState.levelIndex + 1
-        }), () => this.resetLevel(levels[this.state.levelIndex]))
+        }), () => this.resetLevel(this.state.levelIndex))
       }
     } else {
       this.setState((preState) => ({
@@ -70,15 +74,21 @@ export class Game extends Component {
     }
   }
 
+  resetToBeginning = () => {
+    this.resetLevel(0)
+  }
+
   render() {
     const { values, level, isLevelCompleted, levelIndex, isAllLevelsCompleted } = this.state
     const headerText = isLevelCompleted ?
-      'You\'ve completed the level!'
+      `You\'ve completed level ${levelIndex+1}!`
       : `Target Value: ${level && level.targetNumber}`
 
     return (
       isAllLevelsCompleted ? 
-      <EndGameScreen /> :
+      <EndGameScreen
+        resetToBeginning={this.resetToBeginning}
+      /> :
       (<React.Fragment>
         <Header
           text={headerText}
@@ -115,7 +125,8 @@ export class Game extends Component {
             />
         </Grid>
         <LevelButton
-          isLevelCompleted={isLevelCompleted}
+          text={isLevelCompleted ? 'Next Level' : 'Reset'}
+          colour={isLevelCompleted ? Colour.Blue : Colour.Red}
           onClick={this.handleLevelButton}
         />
       </React.Fragment>)
