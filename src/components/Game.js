@@ -19,7 +19,7 @@ const Grid = styled.div`
 
 export class Game extends Component {
   state = {
-    levelIndex: 4,
+    levelIndex: 0,
     level: null,
     values: [],
     isLevelCompleted: false,
@@ -81,7 +81,7 @@ export class Game extends Component {
   render() {
     const { values, level, isLevelCompleted, levelIndex, isAllLevelsCompleted } = this.state
     const headerText = isLevelCompleted ?
-      `You\'ve completed level ${levelIndex+1}!`
+      `You've completed level ${levelIndex+1}!`
       : `Target Value: ${level && level.targetNumber}`
 
     return (
