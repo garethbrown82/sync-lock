@@ -11,6 +11,7 @@ const GlobalStyle = createGlobalStyle`
 const StyledWrapper = styled.div`
   max-width: 300px;
   margin: 20px auto;
+  padding: 0 10px;
 `
 
 class App extends Component {

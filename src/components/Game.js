@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { SquareButton } from './SquareButton'
 import { Header } from './Header'
 import { LevelButton } from './LevelButton'
+import { EndGameScreen } from './EndGameScreen'
 import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
@@ -17,27 +18,31 @@ const Grid = styled.div`
 
 export class Game extends Component {
   state = {
+    levelIndex: 0,
     level: null,
     values: [],
     isLevelCompleted: false,
+    isAllLevelsCompleted: false,
   }
 
   componentDidMount = () => {
-    this.setInitialLevel(levels[0])
+    const { levelIndex } = this.state
+    this.resetLevel(levels[levelIndex])
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { values, level } = this.state
-    const isSolved = isLevelSolved(values, level.targetNumber)
-    if (!prevState.isLevelCompleted && isSolved) {
-      this.setState({ isLevelCompleted: isSolved })
+    const isCompleted = isLevelSolved(values, level.targetNumber)
+    if (!prevState.isLevelCompleted && isCompleted) {
+      this.setState({ isLevelCompleted: isCompleted })
     }
   }
 
-  setInitialLevel = (level) => {
+  resetLevel = (level) => {
     this.setState({ level }, () => {
       this.setState({
         values: this.state.level.initialValues,
+        isLevelCompleted: false,
       })
     })
   }
@@ -50,9 +55,14 @@ export class Game extends Component {
   }
 
   handleLevelButton = () => {
-    console.log('level button clicked')
     if (this.state.isLevelCompleted) {
-      console.log('go to next level')
+      if (this.state.levelIndex+1 === levels.length) {
+        this.setState({ isAllLevelsCompleted: true })
+      } else {
+        this.setState((prevState) => ({
+          levelIndex: prevState.levelIndex + 1
+        }), () => this.resetLevel(levels[this.state.levelIndex]))
+      }
     } else {
       this.setState((preState) => ({
         values: preState.level.initialValues
@@ -61,16 +71,18 @@ export class Game extends Component {
   }
 
   render() {
-    const { values, level, isLevelCompleted } = this.state
+    const { values, level, isLevelCompleted, levelIndex, isAllLevelsCompleted } = this.state
     const headerText = isLevelCompleted ?
       'You\'ve completed the level!'
       : `Target Value: ${level && level.targetNumber}`
 
     return (
-      <React.Fragment>
+      isAllLevelsCompleted ? 
+      <EndGameScreen /> :
+      (<React.Fragment>
         <Header
           text={headerText}
-          levelNumber={3}
+          levelNumber={levelIndex+1}
         />
         <Grid>
           <SquareButton
@@ -106,7 +118,7 @@ export class Game extends Component {
           isLevelCompleted={isLevelCompleted}
           onClick={this.handleLevelButton}
         />
-      </React.Fragment>
+      </React.Fragment>)
     )
   }
 }

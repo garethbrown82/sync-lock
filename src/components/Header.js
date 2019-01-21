@@ -6,7 +6,6 @@ const StyledHeader = styled.div`
   border: solid 1px #00B760;
   color: white;
   border-radius: 10px;
-  padding: 10px;
   text-align: center;
 `
 
