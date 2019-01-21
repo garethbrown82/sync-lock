@@ -44,8 +44,51 @@ const level2 = {
   ]
 }
 
+const level3 = {
+  targetNumber: 25,
+  initialValues: [10, 9, 5, 20],
+  buttonActions: [
+    createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 7),
+    createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 4),
+    createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 2),
+    createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Divide, 2),
+    createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Add, 5),
+    createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Multiply, 10),
+  ]
+}
+
+const level4 = {
+  targetNumber: 2,
+  initialValues: [20, 8, 6, 0],
+  buttonActions: [
+    createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Subtract, 4),
+    createButtonAction(Button.TopLeft, Button.BottomRight, Operation.Add, 4),
+    createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 3),
+    createButtonAction(Button.BottomLeft, Button.TopRight, Operation.Divide, 2),
+    createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Subtract, 3),
+    createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Subtract, 34),
+    createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Add, 2),
+  ]
+}
+
+const level5 = {
+  targetNumber: 48,
+  initialValues: [10, 27, 6, 96],
+  buttonActions: [
+    createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 8),
+    createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 2),
+    createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 7),
+    createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 4),
+    createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Subtract, 3),
+    createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
+  ]
+}
+
 export const levels = [
   level1,
   level2,
+  level3,
+  level4,
+  level5,
 ]
 

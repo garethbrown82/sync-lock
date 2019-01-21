@@ -19,7 +19,7 @@ const Grid = styled.div`
 
 export class Game extends Component {
   state = {
-    levelIndex: 0,
+    levelIndex: 4,
     level: null,
     values: [],
     isLevelCompleted: false,
