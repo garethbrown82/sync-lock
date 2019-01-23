@@ -9,7 +9,7 @@ const GlobalStyle = createGlobalStyle`
 `
 
 const StyledWrapper = styled.div`
-  max-width: 300px;
+  max-width: 350px;
   margin: 20px auto;
   padding: 0 10px;
 `
