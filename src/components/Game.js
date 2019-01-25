@@ -7,7 +7,7 @@ import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
 import { Colour } from './helpers';
-import { saveLevelToIndexedDb, getLevelFromIndexedDb } from '../repository/indexeddb'
+import { saveLevelToIndexedDb, getSavedLevel } from '../repository/indexeddb'
 
 const Grid = styled.div`
   height: 250px;
@@ -27,8 +27,9 @@ export class Game extends Component {
     isAllLevelsCompleted: false,
   }
 
-  componentDidMount = () => {
-    const savedLevel = getLevelFromIndexedDb()
+  componentDidMount = async () => {
+    const savedLevel = await getSavedLevel()
+    console.log('level from indexedDB', savedLevel)
     const levelIndex = savedLevel || this.state.levelIndex
     this.resetLevel(levelIndex)
   }
