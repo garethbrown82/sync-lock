@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { levels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
 import { Colour } from './helpers';
+import { saveLevelToIndexedDb, getLevelFromIndexedDb } from '../repository/indexeddb'
 
 const Grid = styled.div`
   height: 250px;
@@ -27,7 +28,8 @@ export class Game extends Component {
   }
 
   componentDidMount = () => {
-    const { levelIndex } = this.state
+    const savedLevel = getLevelFromIndexedDb()
+    const levelIndex = savedLevel || this.state.levelIndex
     this.resetLevel(levelIndex)
   }
 
@@ -60,17 +62,24 @@ export class Game extends Component {
 
   handleLevelButton = () => {
     if (this.state.isLevelCompleted) {
-      if (this.state.levelIndex+1 === levels.length) {
-        this.setState({ isAllLevelsCompleted: true })
-      } else {
-        this.setState((prevState) => ({
-          levelIndex: prevState.levelIndex + 1
-        }), () => this.resetLevel(this.state.levelIndex))
-      }
+      this.setNextLevel()
     } else {
       this.setState((preState) => ({
         values: preState.level.initialValues
       }))
+    }
+  }
+
+  setNextLevel = () => {
+    if (this.state.levelIndex+1 === levels.length) {
+      this.setState({ isAllLevelsCompleted: true })
+    } else {
+      this.setState((prevState) => ({
+        levelIndex: prevState.levelIndex + 1
+      }), () => {
+        this.resetLevel(this.state.levelIndex)
+        saveLevelToIndexedDb(this.state.levelIndex)
+      })
     }
   }
 
