@@ -103,6 +103,7 @@ export class Game extends Component {
         <Header
           text={headerText}
           levelNumber={levelIndex+1}
+          levels={levels}
         />
         <Grid>
           <SquareButton
