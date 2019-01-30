@@ -12,6 +12,7 @@ const StyledSquare = styled.div`
   justify-content: center;
   align-items: center;
   user-select: none;
+  cursor: pointer;
 `
 
 const Number = styled.p`

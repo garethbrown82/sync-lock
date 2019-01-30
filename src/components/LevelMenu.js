@@ -6,6 +6,10 @@ const StyledWrapper = styled.div`
   position: relative;
 `
 
+const MenuWrap = styled.div`
+  cursor: pointer;
+`
+
 const HorizontalLine = styled.div`
   width: 35px;
   height: 3px;
@@ -15,11 +19,23 @@ const HorizontalLine = styled.div`
 
 const MenuContent = styled.div`
   border: solid 1px white;
+  width: max-content;
   position: absolute;
   background-color: black;
   right: 0;
   padding: 0 20px;
   display: ${props => props.isVisible ? 'block' : 'none'}
+`
+
+const MenuItem = styled.p.attrs(props => ({
+  onClick: props.onClick
+}))`
+  cursor: pointer;
+  user-select: none;
+  color: #EFE9F4;
+  &:hover {
+    color: white;
+  }
 `
 
 export class LevelMenu extends React.Component {
@@ -33,19 +49,31 @@ export class LevelMenu extends React.Component {
     }))
   }
 
+  handleLevelClick = (index) => {
+    this.props.setLevel(index)
+    this.setState({ isVisible: false })
+  }
+
   render() {
-    const { levels } = this.props.levels
+    const { levels } = this.props
     return (
       <StyledWrapper>
-        <div
+        <MenuWrap
           onClick={this.toggleMenu}
         >
           <HorizontalLine />
           <HorizontalLine />
           <HorizontalLine />
-        </div>
+        </MenuWrap>
         <MenuContent isVisible={this.state.isVisible}>
-          {levels && levels.map((level, i) => <p key={i}>{`Level ${i+1}`}</p>)}
+          {levels && levels.map((level, i) => (
+            <MenuItem
+              key={i}
+              onClick={() => this.handleLevelClick(i)}
+            >
+              {`Level ${i+1}`}
+            </MenuItem>
+          ))}
         </MenuContent>
       </StyledWrapper>
     )
@@ -54,4 +82,5 @@ export class LevelMenu extends React.Component {
 
 LevelMenu.propTypes = {
   levels: PropTypes.array,
+  setLevel: PropTypes.func,
 }

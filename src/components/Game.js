@@ -25,17 +25,20 @@ export class Game extends Component {
     values: [],
     isLevelCompleted: false,
     isAllLevelsCompleted: false,
+    allLevels: [],
   }
 
   componentDidMount = async () => {
     const savedLevel = await getSavedLevel()
-    console.log('level from indexedDB', savedLevel)
     const levelIndex = savedLevel || this.state.levelIndex
-    this.resetLevel(levelIndex)
+    this.setState({ allLevels: levels }, () => {
+      this.resetLevel(levelIndex)
+    })
   }
 
   componentDidUpdate = (prevProps, prevState) => {
     const { values, level } = this.state
+    if (!level) return
     const isCompleted = isLevelSolved(values, level.targetNumber)
     if (!prevState.isLevelCompleted && isCompleted) {
       this.setState({ isLevelCompleted: isCompleted })
@@ -43,7 +46,7 @@ export class Game extends Component {
   }
 
   resetLevel = (index) => {
-    const level = levels[index]
+    const level = this.state.allLevels[index]
     this.setState({ level }, () => {
       this.setState({
         values: this.state.level.initialValues,
@@ -72,7 +75,7 @@ export class Game extends Component {
   }
 
   setNextLevel = () => {
-    if (this.state.levelIndex+1 === levels.length) {
+    if (this.state.levelIndex+1 === this.state.allLevels.length) {
       this.setState({ isAllLevelsCompleted: true })
     } else {
       this.setState((prevState) => ({
@@ -93,7 +96,7 @@ export class Game extends Component {
     const headerText = isLevelCompleted ?
       `You've completed level ${levelIndex+1}!`
       : `Target Value: ${level && level.targetNumber}`
-
+      
     return (
       isAllLevelsCompleted ? 
       <EndGameScreen
@@ -103,7 +106,8 @@ export class Game extends Component {
         <Header
           text={headerText}
           levelNumber={levelIndex+1}
-          levels={levels}
+          levels={this.state.allLevels}
+          setLevel={this.resetLevel}
         />
         <Grid>
           <SquareButton

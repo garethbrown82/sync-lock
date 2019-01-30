@@ -14,7 +14,7 @@ const StyledHeader = styled.div`
 `
 
 export const Header = (props) => {
-  const { text, levelNumber, levels } = props
+  const { text, levelNumber, levels, setLevel } = props
   return (
     <React.Fragment>
       <StyledHeader>
@@ -22,7 +22,10 @@ export const Header = (props) => {
           <p>{`Level: ${levelNumber}`}</p>
           <p>{text}</p>
         </div>
-        <LevelMenu levels={levels} />
+        <LevelMenu
+          levels={levels}
+          setLevel={setLevel}
+        />
       </StyledHeader>
     </React.Fragment>
   )
@@ -31,4 +34,6 @@ export const Header = (props) => {
 Header.propTypes = {
   text: PropTypes.string.isRequired,
   levelNumber: PropTypes.number.isRequired,
+  levels: PropTypes.array,
+  setLevel: PropTypes.func,
 }

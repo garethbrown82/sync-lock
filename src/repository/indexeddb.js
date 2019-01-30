@@ -5,11 +5,13 @@ export const saveLevelToIndexedDb = (level) => {
     levelIndex: level,
   }
   const request = getDatabaseRequest()
-  request.onsuccess = (event) => {
-    const db = event.target.result
-    const transaction = db.transaction('gameSaves', 'readwrite')
-    const levelObjectStore = transaction.objectStore('gameSaves')
-    levelObjectStore.put(saveData)
+  if (request) {
+    request.onsuccess = (event) => {
+      const db = event.target.result
+      const transaction = db.transaction('gameSaves', 'readwrite')
+      const levelObjectStore = transaction.objectStore('gameSaves')
+      levelObjectStore.put(saveData)
+    }
   }
 }
 
@@ -25,16 +27,18 @@ export const getSavedLevel = async () => {
 const getLevel = () => {
   return new Promise((resolve, reject) => {
     const request = getDatabaseRequest()
-    request.onsuccess = (event) => {
-      const db = event.target.result
-      const transaction = db.transaction('gameSaves')
-      const levelObjectStore = transaction.objectStore('gameSaves')
-      const dataRequest = levelObjectStore.get('111')
-      dataRequest.onsuccess = () => {
-        const levelIndex = dataRequest.result && dataRequest.result.levelIndex
-        resolve(levelIndex)
+    if (request) {
+      request.onsuccess = (event) => {
+        const db = event.target.result
+        const transaction = db.transaction('gameSaves')
+        const levelObjectStore = transaction.objectStore('gameSaves')
+        const dataRequest = levelObjectStore.get('111')
+        dataRequest.onsuccess = () => {
+          const levelIndex = dataRequest.result && dataRequest.result.levelIndex
+          resolve(levelIndex)
+        }
+        dataRequest.onerror = (event) => reject(event)
       }
-      dataRequest.onerror = (event) => reject(event)
     }
   })
 }

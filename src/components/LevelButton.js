@@ -13,6 +13,8 @@ const StyledLevelButton = styled.div.attrs(props => ({
   align-items: center;
   font-size: 24px;
   color: white;
+  cursor: pointer;
+  user-select: none;
 `
 
 export const LevelButton = (props) => {
