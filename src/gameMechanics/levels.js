@@ -22,63 +22,57 @@ export const createLevel = (targetNumber, initialValues, buttonActions) => {
   }
 }
 
-export const levels = [
-  {
-    targetNumber: 10,
-    initialValues: [5, 4, 5, 40],
-    buttonActions: [
-      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 5),
-      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
-      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 2),
-      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
-    ]
-  },
-  {
-    targetNumber: 20,
-    initialValues: [10, 8, 5, 180],
-    buttonActions: [
-      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 10),
-      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 6),
-      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 2),
-      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 3),
-    ]
-  },
-  {
-    targetNumber: 25,
-    initialValues: [10, 9, 5, 20],
-    buttonActions: [
-      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 7),
-      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 4),
-      createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 2),
-      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Divide, 2),
-      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Add, 5),
-      createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Multiply, 10),
-    ]
-  },
-  {
-    targetNumber: 2,
-    initialValues: [20, 8, 6, 0],
-    buttonActions: [
-      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Subtract, 4),
-      createButtonAction(Button.TopLeft, Button.BottomRight, Operation.Add, 4),
-      createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 3),
-      createButtonAction(Button.BottomLeft, Button.TopRight, Operation.Divide, 2),
-      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Subtract, 3),
-      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Subtract, 34),
-      createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Add, 2),
-    ]
-  },
-  {
-    targetNumber: 48,
-    initialValues: [10, 27, 6, 96],
-    buttonActions: [
-      createButtonAction(Button.TopLeft, Button.TopLeft, Operation.Add, 8),
-      createButtonAction(Button.TopRight, Button.TopLeft, Operation.Add, 2),
-      createButtonAction(Button.TopRight, Button.TopRight, Operation.Add, 7),
-      createButtonAction(Button.BottomLeft, Button.BottomLeft, Operation.Multiply, 4),
-      createButtonAction(Button.BottomRight, Button.BottomLeft, Operation.Subtract, 3),
-      createButtonAction(Button.BottomRight, Button.BottomRight, Operation.Divide, 2),
-    ]
-  }
-]
+export const getLevels = () => {
+  const { TopLeft, TopRight, BottomLeft, BottomRight } = Button
+  const { Add, Subtract, Multiply, Divide } = Operation
+
+  const levels = Object.freeze([
+    createLevel(10, [5, 4, 5, 40], [
+      createButtonAction(TopLeft, TopLeft, Add, 5),
+      createButtonAction(TopRight, TopRight, Add, 6),
+      createButtonAction(BottomLeft, BottomLeft, Multiply, 2),
+      createButtonAction(BottomRight, BottomRight, Divide, 2),
+    ]),
+    createLevel(20, [10, 8, 5, 180], [
+      createButtonAction(TopLeft, TopLeft, Add, 10),
+      createButtonAction(TopRight, TopRight, Add, 6),
+      createButtonAction(BottomLeft, BottomLeft, Multiply, 2),
+      createButtonAction(BottomRight, BottomRight, Divide, 3),
+    ]),
+    createLevel(37, [7, 9, 41, 15], [
+      createButtonAction(TopLeft, TopLeft, Add, 9),
+      createButtonAction(TopRight, TopRight, Add, 10),
+      createButtonAction(BottomLeft, BottomLeft, Subtract, 2),
+      createButtonAction(BottomLeft, TopRight, Subtract, 1),
+      createButtonAction(BottomRight, TopLeft, Subtract, 3),
+      createButtonAction(BottomRight, BottomRight, Add, 11),
+    ]),
+    createLevel(25, [10, 9, 5, 20], [
+      createButtonAction(TopLeft, TopLeft, Add, 7),
+      createButtonAction(TopRight, TopRight, Add, 4),
+      createButtonAction(TopRight, TopLeft, Add, 2),
+      createButtonAction(BottomLeft, BottomLeft, Divide, 2),
+      createButtonAction(BottomRight, BottomRight, Add, 5),
+      createButtonAction(BottomRight, BottomLeft, Multiply, 10),
+    ]),
+    createLevel(2, [20, 8, 6, 0], [
+      createButtonAction(TopLeft, TopLeft, Subtract, 4),
+      createButtonAction(TopLeft, BottomRight, Add, 4),
+      createButtonAction(TopRight, TopLeft, Add, 3),
+      createButtonAction(BottomLeft, TopRight, Divide, 2),
+      createButtonAction(BottomLeft, BottomLeft, Subtract, 3),
+      createButtonAction(BottomRight, BottomRight, Subtract, 34),
+      createButtonAction(BottomRight, BottomLeft, Add, 2),
+    ]),
+    createLevel(48, [10, 27, 6, 96], [
+      createButtonAction(TopLeft, TopLeft, Add, 8),
+      createButtonAction(TopRight, TopLeft, Add, 2),
+      createButtonAction(TopRight, TopRight, Add, 7),
+      createButtonAction(BottomLeft, BottomLeft, Multiply, 4),
+      createButtonAction(BottomRight, BottomLeft, Subtract, 3),
+      createButtonAction(BottomRight, BottomRight, Divide, 2),
+    ])
+  ])
+  return levels
+}
 

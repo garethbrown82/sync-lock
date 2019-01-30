@@ -4,7 +4,7 @@ import { Header } from './Header'
 import { LevelButton } from './LevelButton'
 import { EndGameScreen } from './EndGameScreen'
 import styled from 'styled-components'
-import { levels, Button } from '../gameMechanics/levels'
+import { getLevels, Button } from '../gameMechanics/levels'
 import { triggerActions, isLevelSolved } from '../gameMechanics/gameHelpers'
 import { Colour } from './helpers';
 import { saveLevelToIndexedDb, getSavedLevel } from '../repository/indexeddb'
@@ -31,7 +31,7 @@ export class Game extends Component {
   componentDidMount = async () => {
     const savedLevel = await getSavedLevel()
     const levelIndex = savedLevel || this.state.levelIndex
-    this.setState({ allLevels: levels }, () => {
+    this.setState({ allLevels: getLevels() }, () => {
       this.resetLevel(levelIndex)
     })
   }
