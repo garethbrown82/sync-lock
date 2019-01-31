@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { PropTypes } from 'prop-types'
 
 const StyledText = styled.p`
   color: white;
@@ -12,4 +13,9 @@ export const Text = (props) => {
       {props.text}
     </StyledText>
   )
+}
+
+Text.propTypes = {
+  text: PropTypes.string,
+  fontSize: PropTypes.number,
 }

@@ -38,10 +38,3 @@ SquareButton.propTypes = {
   isLevelCompleted: PropTypes.bool.isRequired,
   onClick: PropTypes.func.isRequired,
 }
-
-
-// column={2}
-// row={1}
-// value={values[1]}
-// isLevelCompleted={isLevelCompleted}
-// onClick={() => this.triggerButton(Button.TopRight)}

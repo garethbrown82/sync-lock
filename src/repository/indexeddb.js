@@ -45,7 +45,7 @@ const getLevel = () => {
 
 const getDatabaseRequest = () => {
   if (!window.indexedDB) {
-    console.warn('There is no indexedDB')
+    // console.warn('There is no indexedDB')
     return null
   } else {
     const request = window.indexedDB.open('level-data')
