@@ -21,6 +21,7 @@ export const getSavedLevel = async () => {
     return levelIndex
   } catch (errorEvent) {
     console.error('There was an error when retrieving the levelIndex from indexedDB', errorEvent)
+    return 0
   }
 }
 
@@ -39,6 +40,8 @@ const getLevel = () => {
         }
         dataRequest.onerror = (event) => reject(event)
       }
+    } else {
+      reject(0)
     }
   })
 }

@@ -33,7 +33,6 @@ export class Game extends Component {
   }
 
   initialiseGame = async () => {
-    console.log('initialiseGame')
     const savedLevel = await getSavedLevel()
     const levelIndex = savedLevel || this.state.levelIndex
     this.setState({ allLevels: getLevels() }, () => {
