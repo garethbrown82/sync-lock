@@ -20,7 +20,7 @@ export const getSavedLevel = async () => {
     const levelIndex = await getLevel()
     return levelIndex
   } catch (errorEvent) {
-    console.error('There was an error when retrieving the levelIndex from indexedDB', errorEvent)
+    // console.error('There was an error when retrieving the levelIndex from indexedDB', errorEvent)
     return 0
   }
 }
