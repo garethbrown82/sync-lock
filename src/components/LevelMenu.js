@@ -39,8 +39,31 @@ const MenuItem = styled.p.attrs(props => ({
 `
 
 export class LevelMenu extends React.Component {
-  state = {
-    isVisible: false
+  constructor() {
+    super()
+    this.wrapperRef = React.createRef()
+    this.state = {
+      isVisible: false
+    }
+  }
+
+
+  componentDidMount = () => {
+    document.addEventListener('mousedown', this.handleOutsideClick)
+  }
+
+  componentWillUnmount = () => {
+    document.addEventListener('mousedown', this.handleOutsideClick)
+  }
+
+  handleOutsideClick = (event) => {
+    if (this.wrapperRef && !this.wrapperRef.contains(event.target)) {
+      this.setState({ isVisible: false })
+    }
+  }
+
+  setWrapperRef = (node) => {
+    this.wrapperRef = node
   }
 
   toggleMenu = () => {
@@ -57,7 +80,7 @@ export class LevelMenu extends React.Component {
   render() {
     const { levels } = this.props
     return (
-      <StyledWrapper>
+      <StyledWrapper ref={this.setWrapperRef}>
         <MenuWrap
           onClick={this.toggleMenu}
         >
